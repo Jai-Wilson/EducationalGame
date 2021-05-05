@@ -157,22 +157,17 @@ public class GameActivity extends AppCompatActivity {
 
     //Update the database when the game is finished
     public void onGameFinished(int correctCounter) {
-        //int drinkId = (Integer) getIntent().getExtras().get(EXTRA_DRINKID);
         new UpdateHighScoresDatabaseTask().execute(correctCounter);
     }
 
-    //Inner class to update the drink.
     private class UpdateHighScoresDatabaseTask extends AsyncTask<Integer, Void, Boolean> {
         private ContentValues scoreValues;
 
-        // on preExecute is optional, therefore, do I need this?
         protected void onPreExecute() {
-            // need this?
-            //CheckBox favorite = (CheckBox) findViewById(R.id.favorite);
             scoreValues = new ContentValues();
             scoreValues.put("SCORE", correctCounter);
         }
-        //do in background is needed
+
         protected Boolean doInBackground(Integer... scores) {
             int scoreValue = scores[0];
             SQLiteOpenHelper highScoresDatabaseHelper =
@@ -180,8 +175,6 @@ public class GameActivity extends AppCompatActivity {
             try {
                 SQLiteDatabase db = highScoresDatabaseHelper.getWritableDatabase();
                 db.insert("HIGHSCORE", null, scoreValues);
-//                db.update("HIGHSCORE", scoreValues,
-//                        "_id = ?", new String[]{Integer.toString(scoreValue)});
                 db.close();
                 return true;
             } catch (SQLiteException e) {

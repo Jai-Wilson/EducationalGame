@@ -40,44 +40,17 @@ public class HighScoresActivity extends AppCompatActivity {
         try {
             db = highScoresDatabaseHelper.getReadableDatabase();
             cursor = db.query("HIGHSCORE", null, null, null, null, null, null, null);
-//            cursor = db.query("HIGHSCORE",
-//                    new String[]{"_id", "SCORE"},
-//                    null, null, null, null, null);
             SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(HighScoresActivity.this,
                     android.R.layout.simple_list_item_1,
                     cursor,
                     new String[]{"SCORE"},
                     new int[]{android.R.id.text1},
                     0);
-
-
             highScoresList.setAdapter(listAdapter);
         } catch(SQLiteException e) {
             Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
             toast.show();
         }
-
-//        //Create the listener, I don't think I need this code?
-//        AdapterView.OnItemClickListener itemClickListener =
-//                new AdapterView.OnItemClickListener(){
-//                    @Override
-//                    public void onItemClick(AdapterView<?> listDrinks,
-//                                            View itemView,
-//                                            int position,
-//                                            long id) {
-//                        //Pass the drink the user clicks on to DrinkActivity
-//                        Intent intent = new Intent(DrinkCategoryActivity.this,
-//                                DrinkActivity.class);
-//                        intent.putExtra(DrinkActivity.EXTRA_DRINKID, (int) id);
-//                        startActivity(intent);
-//                    }
-//                };
-//
-//        //Assign the listener to the list view
-//        highScoresList.setOnItemClickListener(itemClickListener);
-
-
-
     }
 
     public void isLightorDark() {

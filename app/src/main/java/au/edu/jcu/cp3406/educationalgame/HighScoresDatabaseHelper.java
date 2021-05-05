@@ -37,8 +37,5 @@ public class HighScoresDatabaseHelper extends SQLiteOpenHelper {
                     + "SCORE TEXT);");
             insertHighScore(db, "10");
         }
-//        if (oldVersion < 2) {
-//            db.execSQL("ALTER TABLE HIGHSCORE ADD COLUMN FAVORITE NUMERIC;");
-//        }
     }
 }
