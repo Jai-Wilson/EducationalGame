@@ -21,30 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class GameActivity extends AppCompatActivity {
     public static final String EXTRA_SCOREID = "scoreId";
 
-//    public String[] questions =
-//            {"Chemical formula for Sodium Chloride?",
-//                    "How many oxygen atoms in a moilecule of water?",
-//                    "Atomic number of Titanium?",
-//                    "Chemical responsible 'spiciness' of a chilli?",
-//                    "What element has the symbol Hg?",
-//                    "Which atom has the highest atomic number?",
-//                    "Only letter that does not appear in the periodic table?",
-//                    "What is the lightest element?",
-//                    "What colour are copper crystals?",
-//                    "What colour does Tungsten burn?"};
-//
-//    public String[] answers =
-//            {"NaCl",
-//                    "1",
-//                    "22",
-//                    "capsaicin",
-//                    "Mercury",
-//                    "Oganesson",
-//                    "j",
-//                    "Hydrogen",
-//                    "Blue",
-//                    "Green"};
-
     Game game;
     Button startButton;
     Button pauseButton;
@@ -63,7 +39,6 @@ public class GameActivity extends AppCompatActivity {
     public int correctCounter;
     public int incorrectCounter;
     public Boolean lightMode;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,19 +67,15 @@ public class GameActivity extends AppCompatActivity {
         incorrectCounter = 0;
         //configure the mode
         isLightorDark();
-
-
     }
 
 
     public void startQuiz(View view) {
-
         if (isStart) {
             startButton.setText("Pause");
             checkButton.setVisibility(View.VISIBLE);
             questionsBox.setVisibility(View.VISIBLE);
-            //String currentQuestion = questions[questionCounter];
-            String  currentQuestion = game.getQuestion(questionCounter);
+            String currentQuestion = game.getQuestion(questionCounter);
             questionsBox.setText(currentQuestion);
             isStart = false;
         } else {
@@ -113,12 +84,10 @@ public class GameActivity extends AppCompatActivity {
             checkButton.setVisibility(View.INVISIBLE);
             isStart = true;
         }
-
     }
 
     public void checkQuestion(View view) {
         String userAnswer = userInputBox.getText().toString().toLowerCase().trim();
-        //String currentAnswer = answers[questionCounter].toLowerCase();
         String currentAnswer = game.getAnswer(questionCounter).toLowerCase();
         if (userAnswer.equals(currentAnswer)) {
             Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
@@ -132,8 +101,7 @@ public class GameActivity extends AppCompatActivity {
         ++questionCounter;
         if (questionCounter < 10) {
             userInputBox.setText("");
-            //String currentQuestion = questions[questionCounter];
-            String  currentQuestion = game.getQuestion(questionCounter);
+            String currentQuestion = game.getQuestion(questionCounter);
             questionsBox.setText(currentQuestion);
         } else {
             onGameFinished(correctCounter);
@@ -157,7 +125,6 @@ public class GameActivity extends AppCompatActivity {
             userInputBox.setHintTextColor(Color.WHITE);
             tableLayout.setBackgroundColor(Color.BLACK);
         }
-
     }
 
     //Update the database when the game is finished
