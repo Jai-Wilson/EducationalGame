@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         mainLayout.setBackgroundColor(Color.WHITE);
         subtitle.setTextColor(Color.BLACK);
         title.setTextColor(Color.BLACK);
-
     }
 
     public void openQuizClicked(View view) {

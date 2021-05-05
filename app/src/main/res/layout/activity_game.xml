@@ -19,20 +19,6 @@
             android:id="@+id/startButton"
             android:onClick="startQuiz"
             />
-<!--        <Button-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Pause"-->
-<!--            android:layout_weight="1"-->
-<!--            android:id="@+id/pauseButton"-->
-<!--            />-->
-<!--        <Button-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Restart"-->
-<!--            android:layout_weight="1"-->
-<!--            android:id="@+id/restartButton"-->
-<!--            />-->
     </TableRow>
 
     <LinearLayout

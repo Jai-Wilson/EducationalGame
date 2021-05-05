@@ -1,7 +1,12 @@
 package au.edu.jcu.cp3406.educationalgame;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +19,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class GameActivity extends AppCompatActivity {
+    public static final String EXTRA_SCOREID = "scoreId";
 
     public String[] questions =
             {"Chemical formula for Sodium Chloride?",
@@ -62,12 +68,11 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
         Intent intent = getIntent();
         lightMode = intent.getBooleanExtra("lightMode", true);
 
         startButton = findViewById(R.id.startButton);
-//        pauseButton = findViewById(R.id.pauseButton);
-//        restartButton = findViewById(R.id.restartButton);
         checkButton = findViewById(R.id.checkButton);
         questionsBox = findViewById(R.id.questionBox);
         userInputBox = findViewById(R.id.userInputBox);
@@ -76,23 +81,15 @@ public class GameActivity extends AppCompatActivity {
         incorrectBox = findViewById(R.id.incorrectBox);
         tableLayout = (TableLayout) findViewById(R.id.tableLayout);
 
-//        restartButton.setVisibility(View.INVISIBLE);
-//        pauseButton.setVisibility(View.INVISIBLE);
         checkButton.setVisibility(View.INVISIBLE);
         questionsBox.setVisibility(View.INVISIBLE);
-
 
         isStart = true;
         questionCounter = 0;
         correctCounter = 0;
         incorrectCounter = 0;
-
+        //configure the mode
         isLightorDark();
-
-
-//        ActionBar actionbar = getSupportActionBar();
-//        assert actionbar != null;
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
 
 
     }
@@ -101,8 +98,6 @@ public class GameActivity extends AppCompatActivity {
     public void startQuiz(View view) {
 
         if (isStart) {
-            //        restartButton.setVisibility(View.VISIBLE);
-            //        pauseButton.setVisibility(View.VISIBLE);
             startButton.setText("Pause");
             checkButton.setVisibility(View.VISIBLE);
             questionsBox.setVisibility(View.VISIBLE);
@@ -114,7 +109,6 @@ public class GameActivity extends AppCompatActivity {
             questionsBox.setVisibility(View.INVISIBLE);
             checkButton.setVisibility(View.INVISIBLE);
             isStart = true;
-
         }
 
     }
@@ -127,7 +121,7 @@ public class GameActivity extends AppCompatActivity {
             ++correctCounter;
             correctBox.setText(String.format("Correct :%d", correctCounter));
         } else {
-            Toast.makeText(this, String.format("Incorrect, the correct answer is: %s", answers[questionCounter]), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, String.format("Incorrect, the correct answer is: %s", answers[questionCounter]), Toast.LENGTH_SHORT).show();
             ++incorrectCounter;
             incorrectBox.setText(String.format("Inorrect :%d", incorrectCounter));
         }
@@ -137,7 +131,8 @@ public class GameActivity extends AppCompatActivity {
             String currentQuestion = questions[questionCounter];
             questionsBox.setText(currentQuestion);
         } else {
-            onBackPressed();
+            onGameFinished(correctCounter);
+            super.onBackPressed();
         }
     }
 
@@ -159,5 +154,49 @@ public class GameActivity extends AppCompatActivity {
         }
 
     }
+
+    //Update the database when the game is finished
+    public void onGameFinished(int correctCounter) {
+        //int drinkId = (Integer) getIntent().getExtras().get(EXTRA_DRINKID);
+        new UpdateHighScoresDatabaseTask().execute(correctCounter);
+    }
+
+    //Inner class to update the drink.
+    private class UpdateHighScoresDatabaseTask extends AsyncTask<Integer, Void, Boolean> {
+        private ContentValues scoreValues;
+
+        // on preExecute is optional, therefore, do I need this?
+        protected void onPreExecute() {
+            // need this?
+            //CheckBox favorite = (CheckBox) findViewById(R.id.favorite);
+            scoreValues = new ContentValues();
+            scoreValues.put("SCORE", correctCounter);
+        }
+        //do in background is needed
+        protected Boolean doInBackground(Integer... scores) {
+            int scoreValue = scores[0];
+            SQLiteOpenHelper highScoresDatabaseHelper =
+                    new HighScoresDatabaseHelper(GameActivity.this);
+            try {
+                SQLiteDatabase db = highScoresDatabaseHelper.getWritableDatabase();
+                db.insert("HIGHSCORE", null, scoreValues);
+//                db.update("HIGHSCORE", scoreValues,
+//                        "_id = ?", new String[]{Integer.toString(scoreValue)});
+                db.close();
+                return true;
+            } catch (SQLiteException e) {
+                return false;
+            }
+        }
+
+        protected void onPostExecute(Boolean success) {
+            if (!success) {
+                Toast toast = Toast.makeText(GameActivity.this,
+                        "Database unavailable", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+    }
+
 
 }
