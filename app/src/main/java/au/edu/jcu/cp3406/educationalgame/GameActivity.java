@@ -40,6 +40,8 @@ public class GameActivity extends AppCompatActivity {
     public int incorrectCounter;
     public Boolean lightMode;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +107,11 @@ public class GameActivity extends AppCompatActivity {
             questionsBox.setText(currentQuestion);
         } else {
             onGameFinished(correctCounter);
-            super.onBackPressed();
+            Intent intent = new Intent(this, SocialNetworkingActivity.class);
+            intent.putExtra("Score", correctCounter);
+            startActivity(intent);
+
+//            super.onBackPressed();
         }
     }
 

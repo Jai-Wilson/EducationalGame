@@ -40,14 +40,6 @@
         android:id="@+id/highScoresButton"
         android:onClick="highSCoresButtonClicked"
         />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Community page"
-        android:layout_gravity="center"
-        android:id="@+id/socialButton"
-        android:onClick="socialClicked"
-        />
 
     <TextView
         android:layout_width="wrap_content"
