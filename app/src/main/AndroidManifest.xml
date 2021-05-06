@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="au.edu.jcu.cp3406.educationalgame">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EducationalGame">
-        <activity android:name=".HighScoresActivity"></activity>
+        <activity android:name=".SocialNetworkingActivity"></activity>
+        <activity android:name=".HighScoresActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".GameActivity" />
         <activity android:name=".MainActivity">

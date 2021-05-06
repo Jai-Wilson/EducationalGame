@@ -4,7 +4,7 @@ public class Game {
 
     public String[] questions =
             {"Chemical formula for Sodium Chloride?",
-                    "How many oxygen atoms in a moilecule of water?",
+                    "How many oxygen atoms in a molecule of water?",
                     "Atomic number of Titanium?",
                     "Chemical responsible 'spiciness' of a chilli?",
                     "What element has the symbol Hg?",

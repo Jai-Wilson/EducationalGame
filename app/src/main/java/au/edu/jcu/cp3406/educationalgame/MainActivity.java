@@ -88,4 +88,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void socialClicked(View view) {
+        Intent intent = new Intent(this, SocialNetworkingActivity.class);
+        startActivity(intent);
+    }
 }
