@@ -22,6 +22,7 @@ public class SocialNetworkingActivity extends AppCompatActivity {
     private User user;
     Button sendTweetbutton;
     Button declineTweetButton;
+    public String userName;
 
 
 
@@ -35,9 +36,10 @@ public class SocialNetworkingActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         score = intent.getIntExtra("Score", 0);
+        userName = intent.getStringExtra("userName");
 
         userScore = findViewById(R.id.userScoreDisplay);
-        userScore.setText(String.format("Just scored %d on the chemystery quiz! #learningisfun", score));
+        userScore.setText(String.format("%s just scored %d on the chemystery quiz! #learningisfun", userName, score));
     }
 
 
@@ -48,7 +50,7 @@ public class SocialNetworkingActivity extends AppCompatActivity {
                 if (isAuthorised()) {
 
                     try {
-                        twitter.updateStatus(String.format("Just scored %d on the chemystery quiz! #learningisfun", score));
+                        twitter.updateStatus(String.format("%s just scored %d on the chemystery quiz! #learningisfun", userName, score));
                     } catch (TwitterException ignored) {
 
                     }
@@ -56,10 +58,9 @@ public class SocialNetworkingActivity extends AppCompatActivity {
 
             }
         });
-
         userScore.setText("Success!");
-
-
+        sendTweetbutton.setEnabled(false);
+        declineTweetButton.setText("Return to main menu");
     }
 
     private boolean isAuthorised() {
@@ -75,6 +76,8 @@ public class SocialNetworkingActivity extends AppCompatActivity {
 
 
     public void declineTweet(View view) {
-        super.onBackPressed();
+//        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 }

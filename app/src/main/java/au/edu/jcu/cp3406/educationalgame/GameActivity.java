@@ -39,6 +39,7 @@ public class GameActivity extends AppCompatActivity {
     public int correctCounter;
     public int incorrectCounter;
     public Boolean lightMode;
+    public String userName;
 
 
 
@@ -49,6 +50,7 @@ public class GameActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         lightMode = intent.getBooleanExtra("lightMode", true);
+        userName = intent.getStringExtra("userName");
 
         game = new Game();
         startButton = findViewById(R.id.startButton);
@@ -109,6 +111,7 @@ public class GameActivity extends AppCompatActivity {
             onGameFinished(correctCounter);
             Intent intent = new Intent(this, SocialNetworkingActivity.class);
             intent.putExtra("Score", correctCounter);
+            intent.putExtra("userName", userName);
             startActivity(intent);
 
 //            super.onBackPressed();
