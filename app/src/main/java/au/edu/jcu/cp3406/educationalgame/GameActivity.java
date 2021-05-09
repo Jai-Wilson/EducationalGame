@@ -1,11 +1,16 @@
 package au.edu.jcu.cp3406.educationalgame;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -18,8 +23,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class GameActivity extends AppCompatActivity {
-    public static final String EXTRA_SCOREID = "scoreId";
+public class GameActivity extends AppCompatActivity implements SensorEventListener {
+    private static final int shakeCalibrate = 800;
 
     Game game;
     Button startButton;
@@ -33,15 +38,18 @@ public class GameActivity extends AppCompatActivity {
     ImageView bottomImage;
     TableLayout tableLayout;
 
-
     public int questionCounter;
     public Boolean isStart;
     public int correctCounter;
     public int incorrectCounter;
     public Boolean lightMode;
     public String userName;
-
-
+    //.initialise the sensor
+    private SensorManager sensorManager;
+    private Sensor shakeSensor;
+    private float acelVal;
+    private float acelLast;
+    private float shake;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +70,11 @@ public class GameActivity extends AppCompatActivity {
         incorrectBox = findViewById(R.id.incorrectBox);
         tableLayout = (TableLayout) findViewById(R.id.tableLayout);
 
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        shakeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(sensorListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+
+
         checkButton.setVisibility(View.INVISIBLE);
         questionsBox.setVisibility(View.INVISIBLE);
 
@@ -73,6 +86,49 @@ public class GameActivity extends AppCompatActivity {
         isLightorDark();
     }
 
+    private final SensorEventListener sensorListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+
+            acelLast = acelVal;
+            acelVal = (float) Math.sqrt(x * x + y * y + z * z);
+            float changeInAccel = acelVal - acelLast;
+            shake = shake * 0.9f + changeInAccel;
+
+            if (shake > 7) {
+                //shake detected
+                Toast toast = Toast.makeText(getApplicationContext(), "Shake Detected", Toast.LENGTH_SHORT);
+                userInputBox.setText("");
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(this, shakeSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
 
     public void startQuiz(View view) {
         if (isStart) {
@@ -113,8 +169,6 @@ public class GameActivity extends AppCompatActivity {
             intent.putExtra("Score", correctCounter);
             intent.putExtra("userName", userName);
             startActivity(intent);
-
-//            super.onBackPressed();
         }
     }
 
@@ -171,6 +225,4 @@ public class GameActivity extends AppCompatActivity {
             }
         }
     }
-
-
 }

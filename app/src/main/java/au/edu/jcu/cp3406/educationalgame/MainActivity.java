@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     EditText userNameBox;
     public String userName;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,42 +42,36 @@ public class MainActivity extends AppCompatActivity {
         title = findViewById(R.id.title);
         userNameBox = findViewById(R.id.userNameBox);
 
-        //set initially as lightmode
         mainLayout.setBackgroundColor(Color.WHITE);
         subtitle.setTextColor(Color.BLACK);
         title.setTextColor(Color.BLACK);
         userNameBox.setHintTextColor(Color.BLACK);
         userNameBox.setTextColor(Color.BLACK);
 
-        if (userNameBox.getText().toString().matches("")){
+        if (userNameBox.getText().toString().matches("")) {
             openQuizButton.setEnabled(false);
         }
 
         userNameBox.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (userNameBox.getText().toString().matches("")){
+                if (userNameBox.getText().toString().matches("")) {
                     openQuizButton.setEnabled(false);
-                } else{
+                } else {
                     userName = userNameBox.getText().toString();
                     openQuizButton.setEnabled(true);
                 }
             }
         });
-
     }
-
-
 
     public void openQuizClicked(View view) {
         Intent intent = new Intent(this, GameActivity.class);
@@ -97,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, HighScoresActivity.class);
         intent.putExtra("lightMode", lightMode);
         startActivityForResult(intent, SettingActivity.SETTINGS_RESULT);
-
     }
 
     @Override
@@ -122,12 +114,10 @@ public class MainActivity extends AppCompatActivity {
                         title.setTextColor(Color.WHITE);
                         userNameBox.setHintTextColor(Color.WHITE);
                         userNameBox.setTextColor(Color.WHITE);
-
                     }
                     Log.i("Content view: ", String.valueOf(lightMode));
                 }
             }
         }
     }
-
 }

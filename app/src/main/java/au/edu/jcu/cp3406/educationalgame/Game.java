@@ -26,12 +26,12 @@ public class Game {
                     "Blue",
                     "Green"};
 
-    public String getQuestion(int questionCounter){
+    public String getQuestion(int questionCounter) {
         String generatedQuestion = questions[questionCounter];
         return generatedQuestion;
     }
 
-    public String getAnswer(int questionCounter){
+    public String getAnswer(int questionCounter) {
         String generatedAnswer = answers[questionCounter];
         return generatedAnswer;
     }

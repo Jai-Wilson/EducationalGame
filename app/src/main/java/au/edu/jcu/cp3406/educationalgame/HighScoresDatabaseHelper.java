@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class HighScoresDatabaseHelper extends SQLiteOpenHelper {
-
     private static final String DB_NAME = "HighScores"; // the name of our database
     private static final int DB_VERSION = 2; // the version of the database
 
@@ -16,7 +15,6 @@ public class HighScoresDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         updateMyDatabase(db, 0, DB_VERSION);
     }
 
