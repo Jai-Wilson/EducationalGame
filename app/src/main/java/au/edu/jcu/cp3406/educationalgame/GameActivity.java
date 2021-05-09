@@ -13,6 +13,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class GameActivity extends AppCompatActivity implements SensorEventListener {
@@ -50,6 +52,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private float acelVal;
     private float acelLast;
     private float shake;
+
+    public Boolean finished;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +102,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             float changeInAccel = acelVal - acelLast;
             shake = shake * 0.9f + changeInAccel;
 
-            if (shake > 7) {
+            //detect if shake is strong enough
+            if (shake > 5) {
                 //shake detected
                 Toast toast = Toast.makeText(getApplicationContext(), "Shake Detected", Toast.LENGTH_SHORT);
                 userInputBox.setText("");
@@ -165,6 +170,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             questionsBox.setText(currentQuestion);
         } else {
             onGameFinished(correctCounter);
+            finish();
             Intent intent = new Intent(this, SocialNetworkingActivity.class);
             intent.putExtra("Score", correctCounter);
             intent.putExtra("userName", userName);
@@ -225,4 +231,21 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             }
         }
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == SocialNetworkingActivity.SOCIAL_RESULT) {
+//            if (resultCode == RESULT_OK) {
+//                if (data != null) {
+//                    finished = data.getBooleanExtra("finished", true);
+//                    if (finished) {
+//                        finish();
+//                    }
+//
+//                }
+//            }
+//        }
+//    }
 }

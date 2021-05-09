@@ -15,7 +15,9 @@ import twitter4j.TwitterFactory;
 import twitter4j.User;
 
 public class SocialNetworkingActivity extends AppCompatActivity {
+    public static int SOCIAL_RESULT = 2;
 
+    public boolean finished;
     TextView userScore;
     private Twitter twitter = TwitterFactory.getSingleton();
     public int score;
@@ -28,6 +30,8 @@ public class SocialNetworkingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_social_networking);
+
+        finished = false;
 
         sendTweetbutton = findViewById(R.id.tweetButton);
         declineTweetButton = findViewById(R.id.noTweet);
@@ -73,7 +77,10 @@ public class SocialNetworkingActivity extends AppCompatActivity {
 
 
     public void declineTweet(View view) {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
+        finished = true;
+        Intent intent = new Intent();
+        intent.putExtra("finished", finished);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
