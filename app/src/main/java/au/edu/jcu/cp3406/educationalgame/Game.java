@@ -18,7 +18,7 @@ public class Game {
             {"NaCl",
                     "1",
                     "22",
-                    "capsaicin",
+                    "Capsaicin",
                     "Mercury",
                     "Oganesson",
                     "j",
