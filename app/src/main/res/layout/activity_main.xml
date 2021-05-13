@@ -31,6 +31,12 @@
         android:id="@+id/userNameBox"
         android:layout_gravity="center"
         />
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/spinner1"
+        />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

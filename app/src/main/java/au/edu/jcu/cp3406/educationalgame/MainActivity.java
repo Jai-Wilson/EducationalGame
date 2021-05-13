@@ -7,16 +7,19 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Button openQuizButton;
     Button highScoresButton;
@@ -27,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     TextView title;
     EditText userNameBox;
     public String userName;
+    public Spinner difficultySpinner;
+
+    public ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,19 @@ public class MainActivity extends AppCompatActivity {
         subtitle = findViewById(R.id.subtitle);
         title = findViewById(R.id.title);
         userNameBox = findViewById(R.id.userNameBox);
+
+        //initialise the spinner
+        difficultySpinner = findViewById(R.id.spinner1);
+        //use array adapter for spinner selections
+        adapter = ArrayAdapter.createFromResource(this, R.array.difficulties, R.layout.spinner_color_light_mode);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_light_mode);
+        difficultySpinner.setAdapter(adapter);
+        difficultySpinner.setBackgroundColor(Color.WHITE);
+
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.difficulties, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        difficultySpinner.setAdapter(adapter);
+//        difficultySpinner.setOnItemSelectedListener(this);
 
         mainLayout.setBackgroundColor(Color.WHITE);
         subtitle.setTextColor(Color.BLACK);
@@ -106,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
                         title.setTextColor(Color.BLACK);
                         userNameBox.setHintTextColor(Color.BLACK);
                         userNameBox.setTextColor(Color.BLACK);
+                        adapter = ArrayAdapter.createFromResource(this, R.array.difficulties, R.layout.spinner_color_light_mode);
+                        adapter.setDropDownViewResource(R.layout.spinner_dropdown_light_mode);
 
                     } else {
                         //set background black, colours white
@@ -114,10 +135,23 @@ public class MainActivity extends AppCompatActivity {
                         title.setTextColor(Color.WHITE);
                         userNameBox.setHintTextColor(Color.WHITE);
                         userNameBox.setTextColor(Color.WHITE);
+                        adapter = ArrayAdapter.createFromResource(this, R.array.difficulties, R.layout.spinner_color_dark_mode);
+                        adapter.setDropDownViewResource(R.layout.spinner_dropdown_dark_mode);
                     }
+                    difficultySpinner.setAdapter(adapter);
                     Log.i("Content view: ", String.valueOf(lightMode));
                 }
             }
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">EducationalGame</string>
+    <string name="test">Test</string>
+
+    <string-array name="difficulties">
+        <item>EASY</item>
+        <item>MEDIUM</item>
+        <item>HARD</item>
+        <item>MASTERMIND</item>
+    </string-array>
 </resources>
