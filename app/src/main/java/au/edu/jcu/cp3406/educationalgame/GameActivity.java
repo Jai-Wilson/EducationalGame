@@ -13,7 +13,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +21,6 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class GameActivity extends AppCompatActivity implements SensorEventListener {
@@ -52,8 +50,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private float acelVal;
     private float acelLast;
     private float shake;
-
+    private int difficulty;
+    private int passingRate;
     public Boolean finished;
+    public Boolean passed;
+    public String level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         Intent intent = getIntent();
         lightMode = intent.getBooleanExtra("lightMode", true);
         userName = intent.getStringExtra("userName");
+        difficulty = intent.getIntExtra("difficulty", 0);
 
         game = new Game();
         startButton = findViewById(R.id.startButton);
@@ -88,6 +90,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         incorrectCounter = 0;
         //configure the mode
         isLightorDark();
+        passingRate = getPassRate(difficulty);
     }
 
     private final SensorEventListener sensorListener = new SensorEventListener() {
@@ -170,12 +173,37 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             questionsBox.setText(currentQuestion);
         } else {
             onGameFinished(correctCounter);
+            passed = correctCounter >= passingRate;
             finish();
             Intent intent = new Intent(this, SocialNetworkingActivity.class);
             intent.putExtra("Score", correctCounter);
             intent.putExtra("userName", userName);
+            intent.putExtra("passed", passed);
+            intent.putExtra("level", level);
             startActivity(intent);
         }
+    }
+
+    public int getPassRate(int difficulty) {
+        switch (difficulty) {
+            case 0:
+                passingRate = 5;
+                level = "Easy";
+                break;
+            case 1:
+                passingRate = 7;
+                level = "Medium";
+                break;
+            case 2:
+                passingRate = 8;
+                level = "Hard";
+                break;
+            case 3:
+                passingRate = 10;
+                level = "Mastermind";
+                break;
+        }
+        return passingRate;
     }
 
     public void isLightorDark() {
@@ -232,20 +260,4 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == SocialNetworkingActivity.SOCIAL_RESULT) {
-//            if (resultCode == RESULT_OK) {
-//                if (data != null) {
-//                    finished = data.getBooleanExtra("finished", true);
-//                    if (finished) {
-//                        finish();
-//                    }
-//
-//                }
-//            }
-//        }
-//    }
 }

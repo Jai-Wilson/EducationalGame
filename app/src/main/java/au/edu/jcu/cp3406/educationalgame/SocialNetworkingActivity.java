@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Locale;
+
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -25,6 +27,9 @@ public class SocialNetworkingActivity extends AppCompatActivity {
     Button sendTweetbutton;
     Button declineTweetButton;
     public String userName;
+    public Boolean passed;
+    public String level;
+    public String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +44,19 @@ public class SocialNetworkingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         score = intent.getIntExtra("Score", 0);
         userName = intent.getStringExtra("userName");
+        passed = intent.getBooleanExtra("passed", true);
+        level = intent.getStringExtra("level");
 
         userScore = findViewById(R.id.userScoreDisplay);
-        userScore.setText(String.format("%s just scored %d on the chemystery quiz! #learningisfun", userName, score));
+        if (passed) {
+            //add difficulty
+            message = String.format(Locale.getDefault(), "%s just scored %d on the chemystery quiz on the %s difficulty mode! Well done %s! #learningisfun", userName, score, level, userName);
+            userScore.setText(message);
+        } else {
+            message = String.format(Locale.getDefault(), "%s just scored %d on the chemystery quiz on the %s difficulty mode! Nearly there %s! #keepgoing", userName, score, level, userName);
+            userScore.setText(message);
+        }
     }
-
 
     public void sendTweetClicked(View view) {
         Background.run(new Runnable() {
@@ -51,7 +64,7 @@ public class SocialNetworkingActivity extends AppCompatActivity {
             public void run() {
                 if (isAuthorised()) {
                     try {
-                        twitter.updateStatus(String.format("%s just scored %d on the chemystery quiz! #learningisfun", userName, score));
+                        twitter.updateStatus(message);
                     } catch (TwitterException ignored) {
 
                     }

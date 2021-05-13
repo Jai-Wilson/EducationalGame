@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public Spinner difficultySpinner;
 
     public ArrayAdapter adapter;
+    public int difficulty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_light_mode);
         difficultySpinner.setAdapter(adapter);
         difficultySpinner.setBackgroundColor(Color.WHITE);
+        difficultySpinner.setOnItemSelectedListener(this);
 
 //        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.difficulties, android.R.layout.simple_spinner_item);
 //        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -96,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("lightMode", lightMode);
         intent.putExtra("userName", userName);
+        intent.putExtra("difficulty", difficulty); //up to sending this variable across
         startActivityForResult(intent, SettingActivity.SETTINGS_RESULT);
     }
 
@@ -147,6 +151,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String choice = parent.getItemAtPosition(position).toString();
+        Toast.makeText(getApplicationContext(), choice, Toast.LENGTH_SHORT).show();Toast.makeText(getApplicationContext(), choice, Toast.LENGTH_SHORT).show();
+        difficulty = difficultySpinner.getSelectedItemPosition();
 
     }
 
