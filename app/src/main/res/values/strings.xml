@@ -1,6 +1,27 @@
 <resources>
     <string name="app_name">EducationalGame</string>
     <string name="test">Test</string>
+    <string name="test_your_skills_in_this_fun_chemistry_quiz">Test your skills in this fun chemistry quiz!</string>
+    <string name="high_scores">High Scores</string>
+    <string name="start_quiz">Start Quiz!</string>
+    <string name="add_your_username_here">Add your username here!</string>
+    <string name="can_you_solve_the_chemystery">Can you solve the Chemystery?</string>
+    <string name="settings_cog">Settings Cog</string>
+    <string name="chemistry_teacher">Chemistry Teacher</string>
+    <string name="questions_will_appear_here">Questions will appear here</string>
+    <string name="answer_here">Answer Here</string>
+    <string name="check">Check!</string>
+    <string name="incorect">Incorect:</string>
+    <string name="correct">Correct:</string>
+    <string name="start">Start</string>
+    <string name="high_scores_text">HIGH SCORES</string>
+    <string name="settings">Settings</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="apply">Apply!</string>
+    <string name="would_you_like_to_tweet_the_following">Would you like to tweet the following:</string>
+    <string name="score_displayed_here">Score displayed here</string>
+    <string name="tweet">Tweet</string>
+    <string name="return_to_main_menu">Return to main menu</string>
 
     <string-array name="difficulties">
         <item>EASY</item>

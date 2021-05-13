@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String choice = parent.getItemAtPosition(position).toString();
-        Toast.makeText(getApplicationContext(), choice, Toast.LENGTH_SHORT).show();Toast.makeText(getApplicationContext(), choice, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), choice, Toast.LENGTH_SHORT).show();
         difficulty = difficultySpinner.getSelectedItemPosition();
 
     }

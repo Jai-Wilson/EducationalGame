@@ -11,9 +11,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I chemist her"
+        android:text="@string/can_you_solve_the_chemystery"
         android:layout_gravity="center"
-        android:textSize="35sp"
+        android:textSize="25sp"
         android:id="@+id/title"/>
     <ImageButton
         android:layout_width="wrap_content"
@@ -22,15 +22,16 @@
         android:layout_marginStart="325dp"
         android:id="@+id/settingsButton"
         android:onClick="settingsButtonClicked"
-        />
+        android:contentDescription="@string/settings_cog" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Add your username here!"
+        android:hint="@string/add_your_username_here"
         android:id="@+id/userNameBox"
         android:layout_gravity="center"
-        />
+        android:autofillHints="name"
+        android:inputType="textCapSentences|textAutoCorrect" />
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +41,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Quiz!"
+        android:text="@string/start_quiz"
         android:layout_gravity="center"
         android:id="@+id/openQuizButton"
         android:onClick="openQuizClicked"
@@ -48,7 +49,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="High Scores"
+        android:text="@string/high_scores"
         android:layout_gravity="center"
         android:id="@+id/highScoresButton"
         android:onClick="highSCoresButtonClicked"
@@ -57,15 +58,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="An app that's fun for kids, but too real for adults!"
+        android:text="@string/test_your_skills_in_this_fun_chemistry_quiz"
         android:layout_gravity="center"
         android:textSize="30sp"
         android:id="@+id/subtitle"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/sadguy"
-        />
+        android:src="@drawable/chemteacher"
+        android:contentDescription="@string/chemistry_teacher" />
 
 
 </LinearLayout>

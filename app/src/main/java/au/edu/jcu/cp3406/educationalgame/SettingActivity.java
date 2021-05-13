@@ -35,7 +35,7 @@ public class SettingActivity extends AppCompatActivity {
         radioButtonOne = findViewById(R.id.radioOne);
         radioButtonTwo = findViewById(R.id.radioTwo);
         settingsLabel = findViewById(R.id.settingsLabel);
-        settingsLayout = (LinearLayout) findViewById(R.id.settingsLayout);
+        settingsLayout = findViewById(R.id.settingsLayout);
 
         radioButtonOne.setChecked(!lightMode);
         radioButtonTwo.setChecked(lightMode);

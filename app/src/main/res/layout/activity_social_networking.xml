@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/staticText"
-        android:text="Would you like to tweet the following: "
+        android:text="@string/would_you_like_to_tweet_the_following"
         android:textSize="20sp"
         android:layout_marginTop="100dp"
         android:layout_marginStart="50dp"
@@ -21,13 +21,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/userScoreDisplay"
         android:layout_marginStart="65dp"
-        android:hint="Score displayed here"
+        android:hint="@string/score_displayed_here"
         android:textSize="30sp"
         />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tweet"
+        android:text="@string/tweet"
         android:id="@+id/tweetButton"
         android:onClick="sendTweetClicked"
         android:layout_gravity="center"
@@ -35,7 +35,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Return to main menu"
+        android:text="@string/return_to_main_menu"
         android:id="@+id/noTweet"
         android:onClick="declineTweet"
         android:layout_gravity="center"

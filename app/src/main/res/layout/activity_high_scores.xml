@@ -8,18 +8,10 @@
     android:orientation="vertical"
     android:id="@+id/highScoresLayout">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:layout_gravity="center"
-        android:text="Refresh Database"
-
-        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HIGH SCORES"
+        android:text="@string/high_scores_text"
         android:id="@+id/highScoresLabel"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"

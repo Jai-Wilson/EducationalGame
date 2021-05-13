@@ -1,108 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tableLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameActivity"
-    android:id="@+id/tableLayout">
+    android:orientation="vertical"
+    tools:context=".GameActivity">
 
-    <TableRow
+    <Button
+        android:id="@+id/startButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Start"
-            android:layout_weight="1"
-            android:id="@+id/startButton"
-            android:onClick="startQuiz"
-            />
-    </TableRow>
+        android:onClick="startQuiz"
+        android:text="@string/start" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/correctBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        >
+        android:text="@string/correct"
+        android:textSize="20sp" />
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="Correct: "
-            android:textSize="20sp"
-            android:id="@+id/correctBox"
-            android:layout_weight="0.5"
-            />
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="Incorect: "
-            android:textSize="20sp"
-            android:id="@+id/incorrectBox"
-            android:layout_weight="0.5"
-            />
+    <TextView
+        android:id="@+id/incorrectBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/incorect"
+        android:textSize="20sp" />
 
-    </LinearLayout>
 
-    <TableRow
+    <TextView
+        android:id="@+id/questionBox"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Questions will apeear here"
-            android:textSize="30sp"
-            android:layout_weight="4"
-            android:id="@+id/questionBox"
-            />
-    </TableRow>
+        android:layout_height="wrap_content"
+        android:hint="@string/questions_will_appear_here"
+        android:textSize="30sp" />
 
-    <TableRow
+    <EditText
+        android:layout_marginTop="50dp"
+        android:id="@+id/userInputBox"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        >
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Answer Here"
-            android:id="@+id/userInputBox"
-            />
-    </TableRow>
-
-    <TableRow
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_weight="2"
-        >
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Check!"
-            android:id="@+id/checkButton"
-            android:onClick="checkQuestion"
-            android:layout_gravity="center"
-            />
-    </TableRow>
-    <TableRow
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_weight="9"
-        >
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/bottomImage"
-            />
-
-    </TableRow>
+        android:layout_height="wrap_content"
+        android:hint="@string/answer_here"
+        android:autofillHints="answer"
+        android:inputType="textCapSentences|textAutoCorrect" />
 
 
+    <Button
+
+        android:id="@+id/checkButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="checkQuestion"
+        android:text="@string/check" />
 
 
-
-</TableLayout>
+</LinearLayout>

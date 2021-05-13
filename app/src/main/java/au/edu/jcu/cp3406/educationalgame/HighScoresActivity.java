@@ -20,8 +20,6 @@ public class HighScoresActivity extends AppCompatActivity {
     TextView highScoresLabel;
     ListView highScoresList;
     public Boolean lightMode;
-    private SQLiteDatabase db;
-    private Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +34,8 @@ public class HighScoresActivity extends AppCompatActivity {
 
         SQLiteOpenHelper highScoresDatabaseHelper = new HighScoresDatabaseHelper(this);
         try {
-            db = highScoresDatabaseHelper.getReadableDatabase();
-            cursor = db.query("HIGHSCORE", null, null, null, null, null, "SCORE DESC", null);
+            SQLiteDatabase db = highScoresDatabaseHelper.getReadableDatabase();
+            Cursor cursor = db.query("HIGHSCORE", null, null, null, null, null, "SCORE DESC", null);
             SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(HighScoresActivity.this,
                     android.R.layout.simple_list_item_1,
                     cursor,

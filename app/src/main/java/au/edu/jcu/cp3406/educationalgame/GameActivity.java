@@ -16,27 +16,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TableLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Locale;
+
 public class GameActivity extends AppCompatActivity implements SensorEventListener {
-    private static final int shakeCalibrate = 800;
 
     Game game;
     Button startButton;
-    Button pauseButton;
-    Button restartButton;
     Button checkButton;
     TextView questionsBox;
     TextView correctBox;
     TextView incorrectBox;
     EditText userInputBox;
-    ImageView bottomImage;
-    TableLayout tableLayout;
+    LinearLayout linearLayout;
 
     public int questionCounter;
     public Boolean isStart;
@@ -44,15 +41,12 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     public int incorrectCounter;
     public Boolean lightMode;
     public String userName;
-    //.initialise the sensor
+    //initialise the sensor
     private SensorManager sensorManager;
     private Sensor shakeSensor;
     private float acelVal;
-    private float acelLast;
     private float shake;
-    private int difficulty;
     private int passingRate;
-    public Boolean finished;
     public Boolean passed;
     public String level;
 
@@ -64,17 +58,16 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         Intent intent = getIntent();
         lightMode = intent.getBooleanExtra("lightMode", true);
         userName = intent.getStringExtra("userName");
-        difficulty = intent.getIntExtra("difficulty", 0);
+        int difficulty = intent.getIntExtra("difficulty", 0);
 
         game = new Game();
         startButton = findViewById(R.id.startButton);
         checkButton = findViewById(R.id.checkButton);
         questionsBox = findViewById(R.id.questionBox);
         userInputBox = findViewById(R.id.userInputBox);
-        bottomImage = findViewById(R.id.bottomImage);
         correctBox = findViewById(R.id.correctBox);
         incorrectBox = findViewById(R.id.incorrectBox);
-        tableLayout = (TableLayout) findViewById(R.id.tableLayout);
+        linearLayout = findViewById(R.id.tableLayout);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         shakeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -100,15 +93,14 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             float y = event.values[1];
             float z = event.values[2];
 
-            acelLast = acelVal;
+            float acelLast = acelVal;
             acelVal = (float) Math.sqrt(x * x + y * y + z * z);
             float changeInAccel = acelVal - acelLast;
             shake = shake * 0.9f + changeInAccel;
 
             //detect if shake is strong enough
-            if (shake > 5) {
+            if (shake > 10) {
                 //shake detected
-                Toast toast = Toast.makeText(getApplicationContext(), "Shake Detected", Toast.LENGTH_SHORT);
                 userInputBox.setText("");
             }
         }
@@ -160,11 +152,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         if (userAnswer.equals(currentAnswer)) {
             Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
             ++correctCounter;
-            correctBox.setText(String.format("Correct : %d", correctCounter));
+            correctBox.setText(String.format(Locale.getDefault(), "Correct : %d", correctCounter));
         } else {
             Toast.makeText(this, String.format("Incorrect, the correct answer is: %s", currentAnswer), Toast.LENGTH_SHORT).show();
             ++incorrectCounter;
-            incorrectBox.setText(String.format("Inorrect : %d", incorrectCounter));
+            incorrectBox.setText(String.format(Locale.getDefault(), "Inorrect : %d", incorrectCounter));
         }
         ++questionCounter;
         if (questionCounter < 10) {
@@ -213,14 +205,14 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             questionsBox.setTextColor(Color.BLACK);
             userInputBox.setTextColor(Color.BLACK);
             userInputBox.setHintTextColor(Color.BLACK);
-            tableLayout.setBackgroundColor(Color.WHITE);
+            linearLayout.setBackgroundColor(Color.WHITE);
         } else {
             correctBox.setTextColor(Color.WHITE);
             incorrectBox.setTextColor(Color.WHITE);
             questionsBox.setTextColor(Color.WHITE);
             userInputBox.setTextColor(Color.WHITE);
             userInputBox.setHintTextColor(Color.WHITE);
-            tableLayout.setBackgroundColor(Color.BLACK);
+            linearLayout.setBackgroundColor(Color.BLACK);
         }
     }
 
