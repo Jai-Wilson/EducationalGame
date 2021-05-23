@@ -37,14 +37,17 @@ public class SettingActivity extends AppCompatActivity {
         settingsLabel = findViewById(R.id.settingsLabel);
         settingsLayout = findViewById(R.id.settingsLayout);
 
+        //when app is initially created, set to lightMode
         radioButtonOne.setChecked(!lightMode);
         radioButtonTwo.setChecked(lightMode);
 
+        // change to desired mode in onCreate
         isLightOrDark();
     }
 
 
     public void radioApply(View view) {
+        // return to mainActivity screen and finish this activity
         isLightOrDark();
         Intent intent = new Intent();
         intent.putExtra("lightMode", lightMode);
@@ -54,6 +57,7 @@ public class SettingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        // return to mainActivity screen and finish this activity
         super.onBackPressed();
         Intent intent = new Intent();
         intent.putExtra("lightMode", lightMode);
@@ -63,12 +67,14 @@ public class SettingActivity extends AppCompatActivity {
 
     public void isLightOrDark() {
         if (radioButtonOne.isChecked()) {
+            // set to dark mode
             settingsLayout.setBackgroundColor(Color.BLACK);
             radioButtonOne.setTextColor(Color.WHITE);
             radioButtonTwo.setTextColor(Color.WHITE);
             settingsLabel.setTextColor(Color.WHITE);
             lightMode = false;
         } else {
+            // set to light mode
             settingsLayout.setBackgroundColor(Color.WHITE);
             radioButtonOne.setTextColor(Color.BLACK);
             radioButtonTwo.setTextColor(Color.BLACK);

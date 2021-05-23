@@ -84,6 +84,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         incorrectCounter = 0;
         //configure the mode
         isLightorDark();
+        //determine the passing grade
         passingRate = getPassRate(difficulty);
     }
 
@@ -103,7 +104,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
             //detect if shake is strong enough
             if (shake > 10) {
-                //shake detected
+                //shake detected, remove the users input
                 userInputBox.setText("");
             }
         }
@@ -152,12 +153,15 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     public void checkQuestion(View view) {
         String userAnswer = userInputBox.getText().toString().toLowerCase().trim();
         String currentAnswer = game.getAnswer(questionCounter).toLowerCase();
+        // convert both user answer and stored answer to lowercase
         if (userAnswer.equals(currentAnswer)) {
+            //log messages to ensure game logic
             Log.i("GameActivity", String.format("Correct Answer is: %s", currentAnswer));
             Log.i("GameActivity", String.format("Raw input is: %s", userInputBox.getText().toString()));
             Log.i("GameActivity", String.format("User's answer: %s", userAnswer));
             Log.i("GameActivity", String.valueOf(userAnswer.equals(currentAnswer)));
             Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
+            //if correct, add 1 to the correctCounter
             ++correctCounter;
             correctBox.setText(String.format(Locale.getDefault(), "Correct : %d", correctCounter));
         } else {
@@ -171,23 +175,34 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         }
         ++questionCounter;
         if (questionCounter < 10) {
+            // if game is not finished, get the next question and display it
             userInputBox.setText("");
             String currentQuestion = game.getQuestion(questionCounter);
             questionsBox.setText(currentQuestion);
         } else {
+            //if question counter > 10, then all the questions have been completed
             onGameFinished(correctCounter);
+            //update the SQLiteDataBase
             passed = correctCounter >= passingRate;
+            //calculate if the user passed or not
             finish();
+            //finish the game activity to ensure correct lifecycle methods
             Intent intent = new Intent(this, SocialNetworkingActivity.class);
             intent.putExtra("Score", correctCounter);
             intent.putExtra("userName", userName);
             intent.putExtra("passed", passed);
             intent.putExtra("level", level);
             startActivity(intent);
+            //open the socialnetworking activity
         }
     }
 
     public int getPassRate(int difficulty) {
+        //depending on the spinner selection on the previous activity, determine the passing grade
+        // easy = 5 questions correct
+        // medium = 7
+        // hard = 9
+        // mastermind = 10
         switch (difficulty) {
             case 0:
                 passingRate = 5;
@@ -210,6 +225,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void isLightorDark() {
+        // from boolean variable passed in, determine if the app is in light or dark mode
         if (lightMode) {
             correctBox.setTextColor(Color.BLACK);
             incorrectBox.setTextColor(Color.BLACK);
@@ -233,6 +249,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private class UpdateHighScoresDatabaseTask extends AsyncTask<Integer, Void, Boolean> {
+        //add new value to the database
         private ContentValues scoreValues;
 
         protected void onPreExecute() {

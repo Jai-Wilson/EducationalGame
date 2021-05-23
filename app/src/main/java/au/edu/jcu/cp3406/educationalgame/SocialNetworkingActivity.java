@@ -17,7 +17,6 @@ import twitter4j.TwitterFactory;
 import twitter4j.User;
 
 public class SocialNetworkingActivity extends AppCompatActivity {
-    public static int SOCIAL_RESULT = 2;
 
     public boolean finished;
     TextView userScore;
@@ -49,13 +48,13 @@ public class SocialNetworkingActivity extends AppCompatActivity {
 
         userScore = findViewById(R.id.userScoreDisplay);
         if (passed) {
-            //add difficulty
+            // display positive message if the user passed on their respective level
             message = String.format(Locale.getDefault(), "%s just scored %d on the chemystery quiz on the %s difficulty mode! Well done %s! #learningisfun", userName, score, level, userName);
-            userScore.setText(message);
         } else {
+            // display encouraging message if the user passed on their respective level
             message = String.format(Locale.getDefault(), "%s just scored %d on the chemystery quiz on the %s difficulty mode! Nearly there %s! #keepgoing", userName, score, level, userName);
-            userScore.setText(message);
         }
+        userScore.setText(message);
     }
 
     public void sendTweetClicked(View view) {
@@ -64,6 +63,7 @@ public class SocialNetworkingActivity extends AppCompatActivity {
             public void run() {
                 if (isAuthorised()) {
                     try {
+                        // send the desired message
                         twitter.updateStatus(message);
                     } catch (TwitterException ignored) {
 
@@ -95,5 +95,7 @@ public class SocialNetworkingActivity extends AppCompatActivity {
         intent.putExtra("finished", finished);
         setResult(RESULT_OK, intent);
         finish();
+        // finish the activity and return to the main menu. As previous activity has been finished,
+        // if the user presses the back button, they will be sent ot the main screen
     }
 }

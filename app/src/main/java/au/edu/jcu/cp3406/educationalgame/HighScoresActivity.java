@@ -34,7 +34,7 @@ public class HighScoresActivity extends AppCompatActivity {
         highScoresLabel = findViewById(R.id.highScoresLabel);
         highScoresList = (ListView) findViewById(R.id.highScoresList);
         isLightorDark();
-
+        // SQL query to display entire database
         SQLiteOpenHelper highScoresDatabaseHelper = new HighScoresDatabaseHelper(this);
         try {
             SQLiteDatabase db = highScoresDatabaseHelper.getReadableDatabase();

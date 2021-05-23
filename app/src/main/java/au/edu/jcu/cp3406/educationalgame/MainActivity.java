@@ -59,11 +59,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         difficultySpinner.setBackgroundColor(Color.WHITE);
         difficultySpinner.setOnItemSelectedListener(this);
 
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.difficulties, android.R.layout.simple_spinner_item);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        difficultySpinner.setAdapter(adapter);
-//        difficultySpinner.setOnItemSelectedListener(this);
-
+        //initially, set the application in light mode
         mainLayout.setBackgroundColor(Color.WHITE);
         subtitle.setTextColor(Color.BLACK);
         title.setTextColor(Color.BLACK);
@@ -71,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         userNameBox.setTextColor(Color.BLACK);
 
         if (userNameBox.getText().toString().matches("")) {
+            // if no text is entered into the username box, disable the start quiz button
             openQuizButton.setEnabled(false);
         }
 
@@ -86,8 +83,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void afterTextChanged(Editable s) {
                 if (userNameBox.getText().toString().matches("")) {
+                    // if no text is entered into the username box, disable the start quiz button
                     openQuizButton.setEnabled(false);
                 } else {
+                    // once text is added, the user can start the game
                     userName = userNameBox.getText().toString();
                     openQuizButton.setEnabled(true);
                 }
@@ -99,7 +98,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("lightMode", lightMode);
         intent.putExtra("userName", userName);
-        intent.putExtra("difficulty", difficulty); //up to sending this variable across
+        intent.putExtra("difficulty", difficulty);
+        // send all relevant values to the GameActivity, being the liughtmode, the username and the
+        // selected difficulty
         startActivityForResult(intent, SettingActivity.SETTINGS_RESULT);
     }
 
@@ -117,33 +118,35 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // when returning from the settings screen, retrieve the result
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SettingActivity.SETTINGS_RESULT) {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
                     lightMode = data.getBooleanExtra("lightMode", false);
                     if (lightMode) {
-                        // set background white, text black
+                        // set background white, text black if light mode
                         mainLayout.setBackgroundColor(Color.WHITE);
                         subtitle.setTextColor(Color.BLACK);
                         title.setTextColor(Color.BLACK);
                         userNameBox.setHintTextColor(Color.BLACK);
                         userNameBox.setTextColor(Color.BLACK);
                         adapter = ArrayAdapter.createFromResource(this, R.array.difficulties, R.layout.spinner_color_light_mode);
+                        //change view of the spinner respectively
                         adapter.setDropDownViewResource(R.layout.spinner_dropdown_light_mode);
 
                     } else {
-                        //set background black, colours white
+                        //set background black, colours white if dark mode
                         mainLayout.setBackgroundColor(Color.BLACK);
                         subtitle.setTextColor(Color.WHITE);
                         title.setTextColor(Color.WHITE);
                         userNameBox.setHintTextColor(Color.WHITE);
                         userNameBox.setTextColor(Color.WHITE);
                         adapter = ArrayAdapter.createFromResource(this, R.array.difficulties, R.layout.spinner_color_dark_mode);
+                        //change view of the spinner respectively
                         adapter.setDropDownViewResource(R.layout.spinner_dropdown_dark_mode);
                     }
                     difficultySpinner.setAdapter(adapter);
-                    Log.i("Content view: ", String.valueOf(lightMode));
                 }
             }
         }
@@ -151,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // when a new spinner selection is made, display selection with toast message
         String choice = parent.getItemAtPosition(position).toString();
         Toast.makeText(getApplicationContext(), choice, Toast.LENGTH_SHORT).show();
         difficulty = difficultySpinner.getSelectedItemPosition();
