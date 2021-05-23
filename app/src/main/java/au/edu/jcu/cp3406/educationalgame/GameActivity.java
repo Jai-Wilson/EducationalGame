@@ -13,6 +13,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -94,7 +95,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             float z = event.values[2];
 
             float acelLast = acelVal;
+            //calculate the acceleeation
             acelVal = (float) Math.sqrt(x * x + y * y + z * z);
+            //find the change in acceleration
             float changeInAccel = acelVal - acelLast;
             shake = shake * 0.9f + changeInAccel;
 
@@ -150,10 +153,18 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         String userAnswer = userInputBox.getText().toString().toLowerCase().trim();
         String currentAnswer = game.getAnswer(questionCounter).toLowerCase();
         if (userAnswer.equals(currentAnswer)) {
+            Log.i("GameActivity", String.format("Correct Answer is: %s", currentAnswer));
+            Log.i("GameActivity", String.format("Raw input is: %s", userInputBox.getText().toString()));
+            Log.i("GameActivity", String.format("User's answer: %s", userAnswer));
+            Log.i("GameActivity", String.valueOf(userAnswer.equals(currentAnswer)));
             Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
             ++correctCounter;
             correctBox.setText(String.format(Locale.getDefault(), "Correct : %d", correctCounter));
         } else {
+            Log.i("GameActivity", String.format("Correct Answer is: %s", currentAnswer));
+            Log.i("GameActivity", String.format("Raw input is: %s", userInputBox.getText().toString()));
+            Log.i("GameActivity", String.format("User's answer: %s", userAnswer));
+            Log.i("GameActivity", String.valueOf(userAnswer.equals(currentAnswer)));
             Toast.makeText(this, String.format("Incorrect, the correct answer is: %s", currentAnswer), Toast.LENGTH_SHORT).show();
             ++incorrectCounter;
             incorrectBox.setText(String.format(Locale.getDefault(), "Inorrect : %d", incorrectCounter));
